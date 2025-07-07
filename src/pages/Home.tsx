@@ -89,7 +89,7 @@ const Home = () => {
                 transition={{ duration: 0.8, delay: 0.4 }}
               >
                 Hi, I'm{" "}
-                <span className="bg-gradient-to-r from-purple-400 via-pink-400 to-primary-600 bg-clip-text text-transparent bg-size-200 animate-gradient">
+                <span className="bg-gradient-to-r from-purple-400 via-pink-400 to-purple-600 bg-clip-text text-transparent bg-size-200 animate-gradient">
                   Ashish Yadav
                 </span>
               </motion.h1>
@@ -201,9 +201,9 @@ const Home = () => {
                 <div className="absolute inset-0 bg-gradient-to-br from-purple-500/30 to-pink-500/30 rounded-full blur-2xl" />
 
                 {/* Profile Image */}
-                <div className="relative w-full h-full rounded-full overflow-hidden border-4 border-gradient-to-br from-primary-500 to-secondary-500 bg-gradient-to-br from-slate-700 to-slate-800">
+                <div className="relative w-full h-full rounded-full overflow-hidden border-4 border-gradient-to-br from-purple-500 to-pink-500 ">
                   <img
-                    src="https://avatars.githubusercontent.com/u/196587612?v=4"
+                    src="public/profile-2.jpg"
                     alt="Ashish Yadav - Creative Developer"
                     className="w-full h-full object-cover"
                   />
