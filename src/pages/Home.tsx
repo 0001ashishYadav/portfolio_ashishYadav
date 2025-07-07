@@ -203,7 +203,7 @@ const Home = () => {
                 {/* Profile Image */}
                 <div className="relative w-full h-full rounded-full overflow-hidden border-4 border-gradient-to-br from-purple-500 to-pink-500 ">
                   <img
-                    src="public/profile-2.jpg"
+                    src="public/profile-pick.jpg"
                     alt="Ashish Yadav - Creative Developer"
                     className="w-full h-full object-cover"
                   />
