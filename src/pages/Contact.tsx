@@ -56,14 +56,24 @@ const Contact = () => {
   ];
 
   const socialLinks = [
-    { icon: Github, name: "GitHub", href: "#", color: "hover:text-gray-300" },
+    {
+      icon: Github,
+      name: "GitHub",
+      href: "https://github.com/0001ashishYadav",
+      color: "hover:text-gray-300",
+    },
     {
       icon: Linkedin,
       name: "LinkedIn",
-      href: "#",
+      href: "https://www.linkedin.com/in/ashish-yadav-608a67349",
       color: "hover:text-blue-400",
     },
-    { icon: Twitter, name: "Twitter", href: "#", color: "hover:text-cyan-400" },
+    {
+      icon: Twitter,
+      name: "Twitter",
+      href: "https://x.com/Ashish46777",
+      color: "hover:text-cyan-400",
+    },
   ];
 
   return (
