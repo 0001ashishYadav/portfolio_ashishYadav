@@ -165,8 +165,16 @@ const Home = () => {
               transition={{ duration: 0.8, delay: 1.0 }}
             >
               {[
-                { icon: Github, href: "#", label: "GitHub" },
-                { icon: Linkedin, href: "#", label: "LinkedIn" },
+                {
+                  icon: Github,
+                  href: "#",
+                  label: "https://github.com/0001ashishYadav",
+                },
+                {
+                  icon: Linkedin,
+                  href: "#",
+                  label: "https://www.linkedin.com/in/ashish-yadav-608a67349",
+                },
                 { icon: Mail, href: "#", label: "Email" },
                 { icon: Download, href: "#", label: "Resume" },
               ].map(({ icon: Icon, href, label }) => (
