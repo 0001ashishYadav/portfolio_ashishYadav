@@ -1,38 +1,46 @@
 import { motion } from "framer-motion";
-import { Code, Palette, Zap, Users, Award, Coffee } from "lucide-react";
+import { Code, Zap, Award, Calendar, Layers, ShieldCheck } from "lucide-react";
 
 const About = () => {
   const stats = [
-    { number: "50+", label: "Projects Completed", icon: Code },
-    { number: "2+", label: "Years Experience", icon: Award },
-    { number: "15+", label: "Happy Clients", icon: Users },
-    { number: "∞", label: "Cups of Coffee", icon: Coffee },
+    { number: "1+", label: "Year Experience", icon: Award },
+    { number: "10+", label: "Projects Built", icon: Calendar },
+    { number: "5+", label: "Production Apps", icon: Layers },
+    { number: "2", label: "Core Stacks", icon: Code },
+  ];
+
+  const quickFacts = [
+    { label: "Location", value: "Khamaria, Bhadohi, UP — 221306" },
+    { label: "Current Role", value: "Full Stack Intern @ Inflection Org Pvt. Ltd." },
+    { label: "Education", value: "BCA @ Allahabad State University" },
+    { label: "Available for", value: "Freelance · Part-time remote work" },
+    { label: "Primary Goal", value: "Help global clients build high-performance SaaS" },
   ];
 
   const values = [
     {
-      icon: Code,
-      title: "Clean Code",
+      icon: Layers,
+      title: "Scalability First",
       description:
-        "I believe in writing maintainable, scalable code that stands the test of time.",
-    },
-    {
-      icon: Palette,
-      title: "Design First",
-      description:
-        "Every project starts with thoughtful design that prioritizes user experience.",
+        "I believe in designing robust database schemas and modular architectures that grow with the user base, avoiding costly future rewrites.",
     },
     {
       icon: Zap,
-      title: "Performance",
+      title: "Performance by Default",
       description:
-        "Speed and efficiency are non-negotiable in today's digital landscape.",
+        "Leveraging Golang for speed-critical microservices and optimizing database indexes and React code to ensure fast load times.",
+    },
+    {
+      icon: ShieldCheck,
+      title: "Clean Data Models",
+      description:
+        "Utilizing PostgreSQL and Prisma ORM for highly structured relational workflows, alongside MongoDB for flexible schemas.",
     },
   ];
 
   return (
     <motion.div
-      className="min-h-screen pt-20 relative z-10"
+      className="min-h-screen pt-24 relative z-10"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
@@ -46,126 +54,134 @@ const About = () => {
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.8, delay: 0.2 }}
         >
-          <h1 className="text-4xl md:text-6xl font-display font-bold mb-6">
-            <span className="bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
+          <h1 className="text-4xl md:text-6xl font-display font-black mb-6">
+            <span className="gradient-text">
               About Me
             </span>
           </h1>
-          <p className="text-xl text-gray-300 max-w-3xl mx-auto">
-            Passionate developer with a love for creating digital experiences
-            that make a difference.
+          <p className="text-lg md:text-xl text-slate-300 max-w-3xl mx-auto font-medium">
+            BCA Student, Full Stack Developer, and Backend Performance Enthusiast.
           </p>
         </motion.div>
 
         {/* Main Content */}
-        <div className="grid lg:grid-cols-2 gap-16 mb-20">
-          {/* Story */}
+        <div className="grid lg:grid-cols-12 gap-12 items-start mb-20">
+          {/* Story (Left) */}
           <motion.div
-            className="space-y-6"
+            className="lg:col-span-7 space-y-6"
             initial={{ x: -50, opacity: 0 }}
             animate={{ x: 0, opacity: 1 }}
             transition={{ duration: 0.8, delay: 0.4 }}
           >
-            <h2 className="text-3xl font-display font-bold text-white mb-6">
+            <h2 className="text-2xl md:text-3xl font-display font-bold text-white mb-6">
               My Story
             </h2>
-            <div className="space-y-4 text-gray-300 leading-relaxed">
-              <p>
-                My journey into web development began with a simple curiosity
-                about how websites work. That curiosity quickly grew into a
-                passion for creating beautiful, functional digital experiences.
+            <div className="space-y-6 text-slate-300 leading-relaxed text-sm md:text-base font-medium">
+              <p className="fade-in-up">
+                My journey into software development started as a curiosity about how the web works behind the screen. I spent hours teaching myself HTML, CSS, and JavaScript, building simple scripts and styling layouts. Seeking to solidify my technical background, I enrolled in the Bachelor of Computer Applications (BCA) program at Allahabad State University.
               </p>
-              <p>
-                Over the past few years, I've had the privilege of working with
-                diverse clients, from startups to established companies, helping
-                them bring their digital visions to life. Each project teaches
-                me something new and fuels my continuous growth as a developer.
+              <p className="fade-in-up">
+                To transition my academic learnings to real-world applications, I joined Inflection Org Pvt. Ltd. as a Full Stack Developer Intern. Operating in a professional production ecosystem pushed my development speed and technical standards. I moved past local setups to construct scalable APIs, manage relational schemas, and integrate payment methods for real business requirements.
               </p>
-              <p>
-                When I'm not coding, you'll find me exploring new technologies,
-                contributing to open-source projects, or sharing knowledge with
-                the developer community through blog posts and tutorials.
+              <p className="fade-in-up">
+                Experiencing how Node.js backends can bottleneck under dense workloads, I adopted Golang and its Fiber framework. This dual specialization enables me to pick the right tool for the job—utilizing Next.js for visual frontends, and Golang for latency-critical, high-concurrency background services.
               </p>
+            </div>
+
+            <div className="pt-6">
+              <h3 className="text-lg font-display font-bold text-white mb-4">GitHub Profile Highlights</h3>
+              <div className="bg-bg-card/45 border border-white/5 p-4 rounded-2xl max-w-lg">
+                <img 
+                  src="https://github-readme-stats.vercel.app/api?username=0001ashishYadav&show_icons=true&theme=tokyonight&hide_border=true&bg_color=0d1424&title_color=a855f7&icon_color=ec4899&text_color=94a3b8" 
+                  alt="Ashish Yadav's GitHub Stats" 
+                  className="w-full h-auto rounded-lg"
+                />
+              </div>
             </div>
           </motion.div>
 
-          {/* Photo & Highlights */}
+          {/* Quick Facts Sidebar (Right) */}
           <motion.div
-            className="relative"
+            className="lg:col-span-5"
             initial={{ x: 50, opacity: 0 }}
             animate={{ x: 0, opacity: 1 }}
-            transition={{ duration: 0.8, delay: 0.6 }}
+            transition={{ duration: 0.8, delay: 0.5 }}
           >
-            <div className="relative bg-gradient-to-br from-purple-500/20 to-pink-500/20 rounded-2xl p-8 backdrop-blur-sm border border-gray-700/50">
-              <div className="h-64 bg-gradient-to-br from-slate-700 to-slate-800 rounded-xl mb-6 flex items-center justify-center">
-                <div className="text-6xl">👨‍💻</div>
+            <div className="bg-bg-card/35 glass-card rounded-3xl p-8 border border-white/5">
+              {/* Profile/Avatar Indicator */}
+              <div className="h-48 bg-gradient-to-br from-primary-500/20 to-accent-500/20 rounded-2xl mb-8 flex flex-col items-center justify-center border border-white/5">
+                <div className="text-5xl mb-2">👨‍💻</div>
+                <div className="text-white font-display font-extrabold text-lg">Ashish Yadav</div>
+                <div className="text-primary-300 text-xs font-mono font-bold mt-1">@0001ashishYadav</div>
               </div>
-              <h3 className="text-xl font-semibold mb-4">Quick Facts</h3>
-              <ul className="space-y-2 text-gray-300">
-                <li>📍 Khamaria, Bhadohi, UP</li>
-                <li>🎓 Doing BCA</li>
-                <li>🚀 Full-Stack Developer</li>
-                <li>🎨 UI/UX Enthusiast</li>
-                <li>☕ Coffee Addict</li>
-              </ul>
+
+              <h3 className="text-lg font-display font-black text-white mb-6">Quick Facts</h3>
+              
+              <div className="space-y-4">
+                {quickFacts.map((fact) => (
+                  <div key={fact.label} className="border-b border-white/5 pb-3 last:border-0 last:pb-0">
+                    <div className="text-xs text-slate-400 font-bold tracking-wider uppercase mb-1">{fact.label}</div>
+                    <div className="text-sm md:text-base text-white font-semibold">{fact.value}</div>
+                  </div>
+                ))}
+              </div>
             </div>
           </motion.div>
         </div>
 
-        {/* Stats */}
+        {/* Stats Summary Grid */}
         <motion.div
-          className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-20"
+          className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-20"
           initial={{ y: 50, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
-          transition={{ duration: 0.8, delay: 0.8 }}
+          transition={{ duration: 0.8, delay: 0.6 }}
         >
           {stats.map((stat, index) => (
             <motion.div
               key={stat.label}
-              className="text-center"
+              className="bg-bg-card/45 glass-card rounded-2xl p-6 text-center border border-white/5 transition-all duration-300"
               initial={{ scale: 0.8, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
-              transition={{ duration: 0.5, delay: 0.8 + index * 0.1 }}
+              transition={{ duration: 0.5, delay: 0.6 + index * 0.1 }}
+              whileHover={{ y: -5 }}
             >
-              <div className="bg-gradient-to-br from-slate-800 to-slate-900 rounded-2xl p-6 border border-gray-700/50 hover:border-primary-500/30 transition-all duration-300">
-                <stat.icon className="w-8 h-8 text-purple-400 mx-auto mb-4" />
-                <div className="text-3xl font-bold text-white mb-2">
-                  {stat.number}
-                </div>
-                <div className="text-gray-400 text-sm">{stat.label}</div>
+              <stat.icon className="w-6 h-6 text-primary-300 mx-auto mb-3" />
+              <div className="text-2xl md:text-3xl font-display font-black text-white mb-1">
+                {stat.number}
               </div>
+              <div className="text-xs md:text-sm text-slate-400 font-bold">{stat.label}</div>
             </motion.div>
           ))}
         </motion.div>
 
-        {/* Values */}
+        {/* Core Values Section */}
         <motion.div
           initial={{ y: 50, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
-          transition={{ duration: 0.8, delay: 1.0 }}
+          transition={{ duration: 0.8, delay: 0.7 }}
         >
-          <h2 className="text-3xl font-display font-bold text-center mb-12">
-            <span className="bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
-              What I Value
-            </span>
+          <h2 className="text-2xl md:text-3xl font-display font-black text-center mb-12 text-white">
+            Core Development Values
           </h2>
 
           <div className="grid md:grid-cols-3 gap-8">
-            {values.map((value, index) => (
+            {values.map((val, index) => (
               <motion.div
-                key={value.title}
-                className="bg-gradient-to-br from-slate-800/50 to-slate-900/50 rounded-2xl p-8 border border-gray-700/50 hover:border-purple-500/30 transition-all duration-300"
+                key={val.title}
+                className="bg-bg-card/30 glass-card rounded-2xl p-8 border border-white/5 transition-all duration-300"
                 initial={{ y: 30, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
-                transition={{ duration: 0.5, delay: 1.0 + index * 0.1 }}
-                whileHover={{ y: -5, scale: 1.02 }}
+                transition={{ duration: 0.5, delay: 0.7 + index * 0.1 }}
+                whileHover={{ y: -5 }}
               >
-                <value.icon className="w-12 h-12 text-purple-400 mb-6" />
-                <h3 className="text-xl font-semibold text-white mb-4">
-                  {value.title}
+                <div className="p-3 bg-primary-500/10 border border-primary-500/20 rounded-xl w-fit mb-6">
+                  <val.icon className="w-6 h-6 text-primary-300" />
+                </div>
+                <h3 className="text-lg md:text-xl font-display font-bold text-white mb-4">
+                  {val.title}
                 </h3>
-                <p className="text-gray-300 leading-relaxed">
-                  {value.description}
+                <p className="text-sm md:text-base text-slate-400 leading-relaxed font-medium">
+                  {val.description}
                 </p>
               </motion.div>
             ))}
