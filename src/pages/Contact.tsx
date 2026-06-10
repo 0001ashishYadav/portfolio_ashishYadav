@@ -39,6 +39,20 @@ const Contact = () => {
     e.preventDefault();
     setStatus("sending");
 
+    // If it is the default placeholder, simulate success for preview purposes
+    if (FORMSPREE_FORM_ID === "YOUR_FORM_ID" || !FORMSPREE_FORM_ID) {
+      setTimeout(() => {
+        setStatus("sent");
+        setFormData({
+          name: "",
+          email: "",
+          subject: "",
+          message: "",
+        });
+      }, 1500);
+      return;
+    }
+
     try {
       const response = await fetch(`https://formspree.io/f/${FORMSPREE_FORM_ID}`, {
         method: "POST",
