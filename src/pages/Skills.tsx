@@ -1,13 +1,14 @@
 import { motion } from "framer-motion";
 import {
   Code2,
-  Palette,
   Database,
   Cloud,
-  Smartphone,
+  Layers,
+  Terminal,
   Cpu,
   Monitor,
-  Layers,
+  Eye,
+  GitBranch,
 } from "lucide-react";
 
 const Skills = () => {
@@ -15,69 +16,61 @@ const Skills = () => {
     {
       title: "Frontend Development",
       icon: Code2,
-      color: "from-blue-500 to-cyan-500",
+      color: "from-purple-500 to-accent-500",
       skills: [
-        { name: "React", level: 95 },
-        { name: "TypeScript", level: 90 },
+        { name: "React.js", level: 90 },
         { name: "Next.js", level: 85 },
-        { name: "Vue.js", level: 80 },
         { name: "Tailwind CSS", level: 95 },
-        { name: "SASS/SCSS", level: 85 },
+        { name: "JavaScript (ES6+)", level: 90 },
+        { name: "HTML5 & CSS3", level: 95 },
       ],
     },
     {
-      title: "Backend Development",
+      title: "Backend & APIs",
+      icon: Cpu,
+      color: "from-indigo-500 to-blue-500",
+      skills: [
+        { name: "Node.js", level: 85 },
+        { name: "Express.js", level: 85 },
+        { name: "Golang (Fiber)", level: 80 },
+        { name: "REST APIs", level: 90 },
+      ],
+    },
+    {
+      title: "Database & ORMs",
       icon: Database,
-      color: "from-green-500 to-emerald-500",
+      color: "from-emerald-500 to-teal-500",
       skills: [
-        { name: "Node.js", level: 90 },
-        { name: "Python", level: 85 },
         { name: "PostgreSQL", level: 80 },
+        { name: "Prisma ORM", level: 85 },
         { name: "MongoDB", level: 85 },
-        { name: "GraphQL", level: 75 },
-        { name: "REST APIs", level: 95 },
+        { name: "SQLite", level: 90 },
       ],
     },
     {
-      title: "DevOps & Cloud",
+      title: "Tools & Deployment",
       icon: Cloud,
-      color: "from-purple-500 to-pink-500",
+      color: "from-pink-500 to-rose-500",
       skills: [
-        { name: "AWS", level: 80 },
-        { name: "Docker", level: 85 },
-        { name: "Kubernetes", level: 70 },
-        { name: "CI/CD", level: 85 },
-        { name: "Terraform", level: 75 },
         { name: "Vercel", level: 90 },
-      ],
-    },
-    {
-      title: "Mobile Development",
-      icon: Smartphone,
-      color: "from-orange-500 to-red-500",
-      skills: [
-        { name: "React Native", level: 85 },
-        { name: "Flutter", level: 75 },
-        { name: "iOS (Swift)", level: 70 },
-        { name: "Android (Kotlin)", level: 75 },
-        { name: "PWA", level: 90 },
-        { name: "Expo", level: 80 },
+        { name: "Git & GitHub", level: 85 },
+        { name: "Postman", level: 90 },
+        { name: "Docker (Basic)", level: 70 },
       ],
     },
   ];
 
   const tools = [
     { name: "VS Code", icon: Monitor },
-    { name: "Figma", icon: Palette },
-    { name: "Git", icon: Code2 },
-    { name: "Postman", icon: Layers },
-    { name: "Webpack", icon: Cpu },
-    { name: "Vite", icon: Cpu },
+    { name: "Postman", icon: Terminal },
+    { name: "Figma", icon: Eye },
+    { name: "Git", icon: GitBranch },
+    { name: "Docker", icon: Layers },
   ];
 
   return (
     <motion.div
-      className="min-h-screen pt-20 relative z-10"
+      className="min-h-screen pt-24 relative z-10"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
@@ -91,35 +84,31 @@ const Skills = () => {
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.8, delay: 0.2 }}
         >
-          <h1 className="text-4xl md:text-6xl font-display font-bold mb-6">
-            <span className="bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
+          <h1 className="text-4xl md:text-6xl font-display font-black mb-6">
+            <span className="gradient-text">
               Skills & Expertise
             </span>
           </h1>
-          <p className="text-xl text-gray-300 max-w-3xl mx-auto">
-            A comprehensive overview of my technical skills and the tools I use
-            to bring ideas to life.
+          <p className="text-lg md:text-xl text-slate-300 max-w-3xl mx-auto font-medium">
+            A focused breakdown of my full-stack capabilities, database designs, and dev tools.
           </p>
         </motion.div>
 
-        {/* Skills Categories */}
-        <div className="grid lg:grid-cols-2 gap-12 mb-20">
+        {/* Skills Categories Grid */}
+        <div className="grid lg:grid-cols-2 gap-10 mb-20">
           {skillCategories.map((category, categoryIndex) => (
             <motion.div
               key={category.title}
-              className="bg-gradient-to-br from-slate-800/50 to-slate-900/50 rounded-2xl p-8 border border-gray-700/50"
-              initial={{ y: 50, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              transition={{ duration: 0.8, delay: 0.4 + categoryIndex * 0.1 }}
+              className="bg-bg-card/45 glass-card rounded-3xl p-8 border border-white/5 fade-in-up"
             >
               {/* Category Header */}
               <div className="flex items-center mb-8">
                 <div
-                  className={`p-3 rounded-xl bg-gradient-to-r ${category.color} mr-4`}
+                  className={`p-3 rounded-2xl bg-gradient-to-r ${category.color} shadow-lg mr-4`}
                 >
-                  <category.icon className="w-6 h-6 text-white" />
+                  <category.icon className="w-5 h-5 text-white" />
                 </div>
-                <h2 className="text-2xl font-display font-bold text-white">
+                <h2 className="text-xl md:text-2xl font-display font-bold text-white">
                   {category.title}
                 </h2>
               </div>
@@ -134,25 +123,26 @@ const Skills = () => {
                     animate={{ x: 0, opacity: 1 }}
                     transition={{
                       duration: 0.5,
-                      delay: 0.6 + categoryIndex * 0.1 + skillIndex * 0.05,
+                      delay: 0.4 + categoryIndex * 0.1 + skillIndex * 0.05,
                     }}
                   >
-                    <div className="flex justify-between items-center">
-                      <span className="text-white font-medium">
+                    <div className="flex justify-between items-center text-sm">
+                      <span className="text-white font-semibold">
                         {skill.name}
                       </span>
-                      <span className="text-gray-400 text-sm">
+                      <span className="text-slate-400 font-bold font-mono">
                         {skill.level}%
                       </span>
                     </div>
-                    <div className="h-2 bg-slate-700 rounded-full overflow-hidden">
+                    {/* Progress Track */}
+                    <div className="h-2 bg-slate-800 rounded-full overflow-hidden border border-white/5">
                       <motion.div
                         className={`h-full bg-gradient-to-r ${category.color} rounded-full`}
                         initial={{ width: 0 }}
                         animate={{ width: `${skill.level}%` }}
                         transition={{
-                          duration: 1,
-                          delay: 0.8 + categoryIndex * 0.1 + skillIndex * 0.05,
+                          duration: 1.2,
+                          delay: 0.6 + categoryIndex * 0.1 + skillIndex * 0.05,
                           ease: "easeOut",
                         }}
                       />
@@ -164,79 +154,60 @@ const Skills = () => {
           ))}
         </div>
 
-        {/* Tools & Technologies */}
+        {/* Tools Grid */}
         <motion.div
-          className="text-center mb-12"
+          className="text-center mb-16"
           initial={{ y: 50, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
-          transition={{ duration: 0.8, delay: 0.8 }}
+          transition={{ duration: 0.8, delay: 0.6 }}
         >
-          <h2 className="text-3xl font-display font-bold mb-6">
-            <span className="bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
-              Tools & Technologies
-            </span>
+          <h2 className="text-2xl md:text-3xl font-display font-black mb-4 text-white">
+            Daily Developer Utilities
           </h2>
-          <p className="text-gray-300 max-w-2xl mx-auto mb-12">
-            The tools and technologies I use daily to create exceptional digital
-            experiences.
+          <p className="text-slate-400 max-w-2xl mx-auto mb-12 font-medium text-sm md:text-base">
+            The software, protocols, and developer toolkits I rely on for daily development.
           </p>
 
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-6 max-w-4xl mx-auto">
             {tools.map((tool, index) => (
               <motion.div
                 key={tool.name}
-                className="group bg-gradient-to-br from-slate-800/50 to-slate-900/50 rounded-2xl p-6 border border-gray-700/50 hover:border-purple-500/30 transition-all duration-300"
+                className="group bg-bg-card/45 glass-card rounded-2xl p-6 border border-white/5 hover:border-primary-500/30 transition-all duration-300"
                 initial={{ scale: 0.8, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
-                transition={{ duration: 0.5, delay: 0.8 + index * 0.1 }}
-                whileHover={{ scale: 1.05, y: -5 }}
+                transition={{ duration: 0.5, delay: 0.6 + index * 0.05 }}
+                whileHover={{ scale: 1.05, y: -4 }}
               >
-                <tool.icon className="w-8 h-8 text-purple-400 mx-auto mb-3 group-hover:text-pink-400 transition-colors" />
-                <p className="text-gray-300 text-sm font-medium">{tool.name}</p>
+                <tool.icon className="w-8 h-8 text-primary-300 mx-auto mb-3 group-hover:text-accent-500 transition-colors" />
+                <p className="text-slate-300 text-sm font-bold">{tool.name}</p>
               </motion.div>
             ))}
           </div>
         </motion.div>
 
-        {/* Learning Journey */}
+        {/* Learning Direction Footer */}
         <motion.div
-          className="bg-gradient-to-br from-slate-800/30 to-slate-900/30 rounded-2xl p-8 md:p-12 border border-gray-700/50 text-center"
+          className="bg-bg-card/30 glass-card rounded-3xl p-8 md:p-12 border border-white/5 text-center max-w-4xl mx-auto"
           initial={{ y: 50, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
-          transition={{ duration: 0.8, delay: 1.0 }}
+          transition={{ duration: 0.8, delay: 0.8 }}
         >
-          <h2 className="text-3xl font-display font-bold text-white mb-6">
-            Continuous Learning
+          <h2 className="text-2xl font-display font-black text-white mb-4">
+            Expansion Directions for 2026
           </h2>
-          <p className="text-gray-300 text-lg max-w-4xl mx-auto leading-relaxed">
-            Technology evolves rapidly, and I'm committed to staying at the
-            forefront. Currently exploring{" "}
-            <span className="text-purple-400 font-semibold">
-              Web3 technologies
-            </span>
-            ,
-            <span className="text-pink-400 font-semibold">
-              {" "}
-              AI/ML integration
-            </span>
-            , and
-            <span className="text-purple-400 font-semibold">
-              {" "}
-              advanced React patterns
-            </span>
-            . My goal is to continuously expand my skill set and deliver
-            cutting-edge solutions.
+          <p className="text-slate-400 text-sm md:text-base max-w-2xl mx-auto leading-relaxed font-medium mb-8">
+            Committed to continuous growth, I am actively leveling up my knowledge in these critical disciplines to build advanced systems.
           </p>
 
-          <div className="mt-8 flex flex-wrap justify-center gap-4">
-            {["WebAssembly", "Rust", "Solidity", "Three.js", "TensorFlow"].map(
+          <div className="flex flex-wrap justify-center gap-3">
+            {["System Design", "Data Structures & Algorithms", "SaaS Multi-tenancy", "Docker Containerization", "API Gateway Patterns"].map(
               (tech, index) => (
                 <motion.span
                   key={tech}
-                  className="px-4 py-2 bg-gradient-to-r from-purple-500/20 to-pink-500/20 text-purple-300 rounded-full border border-purple-500/30 text-sm"
+                  className="px-4 py-2 bg-primary-500/10 border border-primary-500/20 text-primary-300 rounded-xl font-bold font-mono text-xs md:text-sm"
                   initial={{ opacity: 0, scale: 0.8 }}
                   animate={{ opacity: 1, scale: 1 }}
-                  transition={{ duration: 0.5, delay: 1.2 + index * 0.1 }}
+                  transition={{ duration: 0.5, delay: 1.0 + index * 0.05 }}
                 >
                   {tech}
                 </motion.span>
