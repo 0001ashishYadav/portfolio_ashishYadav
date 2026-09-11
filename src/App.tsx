@@ -9,6 +9,8 @@ import Skills from "./pages/Skills";
 import Contact from "./pages/Contact";
 import ParticleBackground from "./components/ParticleBackground";
 
+import Resume from "./pages/Resume";
+
 // Intersection Observer trigger to animate elements with .fade-in-up on scroll/mount
 function ScrollObserver() {
   const location = useLocation();
@@ -39,24 +41,34 @@ function ScrollObserver() {
   return null;
 }
 
+function AppContent() {
+  const location = useLocation();
+  const isResumePage = location.pathname === "/resume";
+
+  return (
+    <div className="min-h-screen bg-bg-dark text-white overflow-x-hidden relative">
+      {!isResumePage && <ParticleBackground />}
+      {!isResumePage && <Navbar />}
+
+      <AnimatePresence mode="wait">
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/projects" element={<Projects />} />
+          <Route path="/skills" element={<Skills />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/resume" element={<Resume />} />
+        </Routes>
+      </AnimatePresence>
+    </div>
+  );
+}
+
 function App() {
   return (
     <Router>
       <ScrollObserver />
-      <div className="min-h-screen bg-bg-dark text-white overflow-x-hidden relative">
-        <ParticleBackground />
-        <Navbar />
-
-        <AnimatePresence mode="wait">
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/projects" element={<Projects />} />
-            <Route path="/skills" element={<Skills />} />
-            <Route path="/contact" element={<Contact />} />
-          </Routes>
-        </AnimatePresence>
-      </div>
+      <AppContent />
     </Router>
   );
 }
