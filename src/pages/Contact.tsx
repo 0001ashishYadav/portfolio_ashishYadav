@@ -80,7 +80,7 @@ const Contact = () => {
     } catch (error) {
       console.error("Contact form error:", error);
       setStatus("error");
-      setStatusMessage("Network error. Please try again or email directly.");
+      setStatusMessage("Unable to connect automatically (often caused by ad-blockers or privacy extensions). Use the direct mail button below to send your message.");
     }
   };
 
@@ -292,15 +292,28 @@ const Contact = () => {
               </motion.button>
 
               {statusMessage && (
-                <p
-                  className={`text-xs text-center font-medium mt-3 px-3 py-2 rounded-xl ${
+                <div
+                  className={`text-xs text-center font-medium mt-3 p-3 rounded-xl ${
                     status === "sent"
                       ? "bg-emerald-500/10 text-emerald-300 border border-emerald-500/20"
                       : "bg-rose-500/10 text-rose-300 border border-rose-500/20"
                   }`}
                 >
-                  {statusMessage}
-                </p>
+                  <p className="mb-2">{statusMessage}</p>
+                  {status === "error" && (
+                    <a
+                      href={`mailto:${RECIPIENT_EMAIL}?subject=${encodeURIComponent(
+                        formData.subject || "Portfolio Contact Inquiry"
+                      )}&body=${encodeURIComponent(
+                        `Name: ${formData.name}\nEmail: ${formData.email}\n\nMessage:\n${formData.message}`
+                      )}`}
+                      className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-violet-600 hover:bg-violet-500 text-white font-semibold transition-colors shadow-sm"
+                    >
+                      <Mail className="w-3.5 h-3.5" />
+                      <span>Send directly via Gmail / Mail Client</span>
+                    </a>
+                  )}
+                </div>
               )}
             </form>
           </motion.div>
