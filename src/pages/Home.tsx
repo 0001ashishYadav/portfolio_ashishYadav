@@ -175,7 +175,7 @@ const Home = () => {
   const socials = [
     { icon: Github, href: "https://github.com/0001ashishYadav", label: "GitHub", color: "#ffffff" },
     { icon: Linkedin, href: "https://www.linkedin.com/in/ashish-yadav-608a67349", label: "LinkedIn", color: "#0A66C2" },
-    { icon: Mail, href: "mailto:ashishkumary959@gmail.com", label: "Email", color: "#ec4899" },
+    { icon: Mail, href: "mailto:000ashishyadav2003@gmail.com", label: "Email", color: "#ec4899" },
   ];
 
   const containerV = {

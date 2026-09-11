@@ -13,8 +13,8 @@ import {
   AlertCircle,
 } from "lucide-react";
 
-// CONFIGURATION: Replace this with your actual Formspree endpoint ID
-const FORMSPREE_FORM_ID = "YOUR_FORM_ID";
+// Direct email delivery configuration (powered by FormSubmit to send emails to your Gmail)
+const RECIPIENT_EMAIL = "000ashishyadav2003@gmail.com";
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -25,6 +25,7 @@ const Contact = () => {
   });
 
   const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
+  const [statusMessage, setStatusMessage] = useState<string>("");
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -38,33 +39,34 @@ const Contact = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setStatus("sending");
-
-    // If it is the default placeholder, simulate success for preview purposes
-    if (FORMSPREE_FORM_ID === "YOUR_FORM_ID" || !FORMSPREE_FORM_ID) {
-      setTimeout(() => {
-        setStatus("sent");
-        setFormData({
-          name: "",
-          email: "",
-          subject: "",
-          message: "",
-        });
-      }, 1500);
-      return;
-    }
+    setStatusMessage("");
 
     try {
-      const response = await fetch(`https://formspree.io/f/${FORMSPREE_FORM_ID}`, {
+      const response = await fetch(`https://formsubmit.co/ajax/${RECIPIENT_EMAIL}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
           Accept: "application/json",
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          _subject: formData.subject
+            ? `[Portfolio Contact] ${formData.subject}`
+            : `New Portfolio Message from ${formData.name}`,
+          message: formData.message,
+          _replyto: formData.email,
+          _template: "table",
+          _captcha: "false",
+        }),
       });
 
-      if (response.ok) {
+      const data = await response.json();
+
+      // FormSubmit returns success: "true" or an activation message on initial setup
+      if (response.ok && (data.success === "true" || data.success === true || data.message?.includes("sent") || data.message?.includes("Activation"))) {
         setStatus("sent");
+        setStatusMessage("Message sent! It has been dispatched to your Gmail inbox.");
         setFormData({
           name: "",
           email: "",
@@ -73,19 +75,22 @@ const Contact = () => {
         });
       } else {
         setStatus("error");
+        setStatusMessage(data.message || "Unable to send message right now. Please try again or reach out via email.");
       }
     } catch (error) {
-      console.error("Formspree submission error:", error);
+      console.error("Contact form error:", error);
       setStatus("error");
+      setStatusMessage("Network error. Please try again or email directly.");
     }
   };
 
-  // Reset success state after 4 seconds
+  // Reset success state after 5 seconds
   useEffect(() => {
     if (status === "sent") {
       const timer = setTimeout(() => {
         setStatus("idle");
-      }, 4000);
+        setStatusMessage("");
+      }, 5000);
       return () => clearTimeout(timer);
     }
   }, [status]);
@@ -94,8 +99,8 @@ const Contact = () => {
     {
       icon: Mail,
       title: "Email Address",
-      value: "ashishkumary959@gmail.com",
-      link: "mailto:ashishkumary959@gmail.com",
+      value: "000ashishyadav2003@gmail.com",
+      link: "mailto:000ashishyadav2003@gmail.com",
     },
     {
       icon: MapPin,
@@ -286,9 +291,15 @@ const Contact = () => {
                 )}
               </motion.button>
 
-              {FORMSPREE_FORM_ID === "YOUR_FORM_ID" && (
-                <p className="text-[11px] text-slate-500 text-center font-mono mt-2">
-                  💡 Setup Tip: Replace <code>YOUR_FORM_ID</code> in <code>Contact.tsx</code> to receive emails.
+              {statusMessage && (
+                <p
+                  className={`text-xs text-center font-medium mt-3 px-3 py-2 rounded-xl ${
+                    status === "sent"
+                      ? "bg-emerald-500/10 text-emerald-300 border border-emerald-500/20"
+                      : "bg-rose-500/10 text-rose-300 border border-rose-500/20"
+                  }`}
+                >
+                  {statusMessage}
                 </p>
               )}
             </form>
