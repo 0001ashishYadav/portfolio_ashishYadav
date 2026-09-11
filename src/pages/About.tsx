@@ -1,5 +1,170 @@
 import { motion } from "framer-motion";
-import { Code, Zap, Award, Calendar, Layers, ShieldCheck } from "lucide-react";
+import { useEffect, useState } from "react";
+import { Code, Zap, Award, Calendar, Layers, ShieldCheck, Star, GitFork, Users, BookOpen, ExternalLink } from "lucide-react";
+import heroBanner from "../assets/hero-banner.png";
+
+interface GitHubUser {
+  public_repos: number;
+  followers: number;
+  following: number;
+  public_gists: number;
+  name: string;
+  bio: string;
+}
+
+interface GitHubRepo {
+  language: string | null;
+  stargazers_count: number;
+  fork: boolean;
+}
+
+const GitHubStats = ({ username }: { username: string }) => {
+  const [user, setUser] = useState<GitHubUser | null>(null);
+  const [langMap, setLangMap] = useState<Record<string, number>>({});
+  const [totalStars, setTotalStars] = useState(0);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const [userRes, reposRes] = await Promise.all([
+          fetch(`https://api.github.com/users/${username}`),
+          fetch(`https://api.github.com/users/${username}/repos?per_page=100&sort=updated`),
+        ]);
+        const userData: GitHubUser = await userRes.json();
+        const reposData: GitHubRepo[] = await reposRes.json();
+        setUser(userData);
+        let stars = 0;
+        const langs: Record<string, number> = {};
+        reposData.forEach((r) => {
+          if (!r.fork) stars += r.stargazers_count;
+          if (r.language) langs[r.language] = (langs[r.language] || 0) + 1;
+        });
+        setTotalStars(stars);
+        setLangMap(langs);
+      } catch (_) {
+        // silently fail
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchData();
+  }, [username]);
+
+  const topLangs = Object.entries(langMap)
+    .sort((a, b) => b[1] - a[1])
+    .slice(0, 5);
+  const totalLangCount = topLangs.reduce((s, [, c]) => s + c, 0);
+
+  const langColors: Record<string, string> = {
+    TypeScript: "#3178c6",
+    JavaScript: "#f7df1e",
+    Go: "#00acd7",
+    Python: "#3572a5",
+    "C++": "#f34b7d",
+    Rust: "#dea584",
+    CSS: "#563d7c",
+    HTML: "#e34c26",
+    Java: "#b07219",
+    Shell: "#89e051",
+  };
+
+  if (loading) {
+    return (
+      <div className="space-y-3 animate-pulse">
+        <div className="h-20 bg-white/5 rounded-2xl" />
+        <div className="h-16 bg-white/5 rounded-2xl" />
+      </div>
+    );
+  }
+
+  if (!user) {
+    return (
+      <a
+        href={`https://github.com/${username}`}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="flex items-center gap-2 text-primary-300 hover:text-white text-sm font-mono font-bold transition-colors"
+      >
+        <ExternalLink className="w-4 h-4" />
+        github.com/{username}
+      </a>
+    );
+  }
+
+  return (
+    <div className="space-y-4">
+      {/* Stats Row */}
+      <div className="grid grid-cols-2 gap-3">
+        {[
+          { icon: BookOpen, label: "Repos", value: user.public_repos },
+          { icon: Star, label: "Stars", value: totalStars },
+          { icon: Users, label: "Followers", value: user.followers },
+          { icon: GitFork, label: "Following", value: user.following },
+        ].map(({ icon: Icon, label, value }) => (
+          <div
+            key={label}
+            className="bg-bg-card/50 border border-white/8 rounded-xl p-3 flex items-center gap-3"
+          >
+            <div className="p-1.5 bg-primary-500/15 rounded-lg">
+              <Icon className="w-3.5 h-3.5 text-primary-300" />
+            </div>
+            <div>
+              <div className="text-white font-display font-black text-base leading-none">{value}</div>
+              <div className="text-slate-400 text-[10px] font-bold tracking-wider uppercase mt-0.5">{label}</div>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {/* Top Languages Bar */}
+      {topLangs.length > 0 && (
+        <div className="bg-bg-card/45 border border-white/5 rounded-2xl p-4">
+          <div className="text-xs text-slate-400 font-bold tracking-wider uppercase mb-3">Top Languages</div>
+          {/* Segmented bar */}
+          <div className="flex rounded-full overflow-hidden h-2 mb-3 gap-0.5">
+            {topLangs.map(([lang, count]) => (
+              <div
+                key={lang}
+                style={{
+                  width: `${(count / totalLangCount) * 100}%`,
+                  backgroundColor: langColors[lang] ?? "#6366f1",
+                }}
+                className="h-full rounded-full"
+              />
+            ))}
+          </div>
+          {/* Legend */}
+          <div className="flex flex-wrap gap-x-3 gap-y-1.5">
+            {topLangs.map(([lang, count]) => (
+              <div key={lang} className="flex items-center gap-1.5">
+                <span
+                  className="w-2.5 h-2.5 rounded-full flex-shrink-0"
+                  style={{ backgroundColor: langColors[lang] ?? "#6366f1" }}
+                />
+                <span className="text-slate-300 text-xs font-semibold">{lang}</span>
+                <span className="text-slate-500 text-[10px]">{Math.round((count / totalLangCount) * 100)}%</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* GitHub link */}
+      <a
+        href={`https://github.com/${username}`}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="flex items-center gap-2 text-xs text-primary-300 hover:text-white transition-colors font-mono font-bold"
+      >
+        <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z" />
+        </svg>
+        github.com/{username}
+      </a>
+    </div>
+  );
+};
 
 const About = () => {
   const stats = [
@@ -46,6 +211,40 @@ const About = () => {
       exit={{ opacity: 0 }}
       transition={{ duration: 0.8 }}
     >
+      {/* Hero Banner Section */}
+      <motion.div
+        className="relative w-full overflow-hidden"
+        style={{ maxHeight: "420px" }}
+        initial={{ opacity: 0, y: -30 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.9, ease: "easeOut" }}
+      >
+        <motion.img
+          src={heroBanner}
+          alt="Ashish Yadav — Full Stack Developer Hero Banner"
+          className="w-full object-cover object-center"
+          style={{ maxHeight: "420px" }}
+          whileHover={{ scale: 1.02 }}
+          transition={{ duration: 0.6 }}
+        />
+        {/* Bottom fade overlay for smooth transition */}
+        <div
+          className="absolute inset-0 pointer-events-none"
+          style={{
+            background:
+              "linear-gradient(to bottom, transparent 50%, rgba(10,15,30,0.85) 100%)",
+          }}
+        />
+        {/* Top fade for navbar blend */}
+        <div
+          className="absolute inset-0 pointer-events-none"
+          style={{
+            background:
+              "linear-gradient(to bottom, rgba(10,15,30,0.3) 0%, transparent 20%)",
+          }}
+        />
+      </motion.div>
+
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         {/* Header */}
         <motion.div
@@ -90,13 +289,7 @@ const About = () => {
 
             <div className="pt-6">
               <h3 className="text-lg font-display font-bold text-white mb-4">GitHub Profile Highlights</h3>
-              <div className="bg-bg-card/45 border border-white/5 p-4 rounded-2xl max-w-lg">
-                <img 
-                  src="https://github-readme-stats.vercel.app/api?username=0001ashishYadav&show_icons=true&theme=tokyonight&hide_border=true&bg_color=0d1424&title_color=a855f7&icon_color=ec4899&text_color=94a3b8" 
-                  alt="Ashish Yadav's GitHub Stats" 
-                  className="w-full h-auto rounded-lg"
-                />
-              </div>
+              <GitHubStats username="0001ashishYadav" />
             </div>
           </motion.div>
 
@@ -108,11 +301,25 @@ const About = () => {
             transition={{ duration: 0.8, delay: 0.5 }}
           >
             <div className="bg-bg-card/35 glass-card rounded-3xl p-8 border border-white/5">
-              {/* Profile/Avatar Indicator */}
-              <div className="h-48 bg-gradient-to-br from-primary-500/20 to-accent-500/20 rounded-2xl mb-8 flex flex-col items-center justify-center border border-white/5">
-                <div className="text-5xl mb-2">👨‍💻</div>
-                <div className="text-white font-display font-extrabold text-lg">Ashish Yadav</div>
-                <div className="text-primary-300 text-xs font-mono font-bold mt-1">@0001ashishYadav</div>
+              {/* Profile Banner Thumbnail */}
+              <div className="relative rounded-2xl mb-8 overflow-hidden border border-white/10 shadow-lg">
+                <img
+                  src={heroBanner}
+                  alt="Ashish Yadav profile banner"
+                  className="w-full object-cover object-center"
+                  style={{ maxHeight: "160px" }}
+                />
+                <div
+                  className="absolute inset-0 pointer-events-none"
+                  style={{
+                    background:
+                      "linear-gradient(to bottom, transparent 40%, rgba(10,15,30,0.75) 100%)",
+                  }}
+                />
+                <div className="absolute bottom-3 left-4">
+                  <div className="text-white font-display font-extrabold text-base drop-shadow">Ashish Yadav</div>
+                  <div className="text-primary-300 text-xs font-mono font-bold">@0001ashishYadav</div>
+                </div>
               </div>
 
               <h3 className="text-lg font-display font-black text-white mb-6">Quick Facts</h3>
